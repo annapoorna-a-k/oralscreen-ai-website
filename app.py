@@ -518,17 +518,16 @@ divider()
 section("demo", "", "Demonstration",
         "A Streamlit app runs the full pipeline on a laptop CPU: upload a photo, add optional details, and get the "
         "segmentation, result, heatmap, SHAP chart and report.")
+videos = list(DEMO_VIDEOS) + [{"title": p.stem.replace("_", " ").title(), "file": p}
+                              for p in sorted((ASSETS / "videos").glob("*.mp4"))]
+for v in videos:
+    st.markdown(f"<h3 class='h3'>{v['title']}</h3>", unsafe_allow_html=True)
+    st.video(str(v["file"]) if "file" in v else v["url"])
 a, b = st.columns([1.3, 1], gap="large")
 with a:
     figure("app_home.png", "Home screen of the OralScreen AI app")
 with b:
-    videos = list(DEMO_VIDEOS) + [{"title": p.stem.replace("_", " ").title(), "file": p}
-                                  for p in sorted((ASSETS / "videos").glob("*.mp4"))]
-    if videos:
-        for v in videos:
-            st.markdown(f"<h3 class='h3'>{v['title']}</h3>", unsafe_allow_html=True)
-            st.video(str(v["file"]) if "file" in v else v["url"])
-    else:
+    if not videos:
         st.markdown("""<div class="note"><b>Demonstration video</b><br>
         A walkthrough video of the application: uploading a photo, entering patient details, and reading the
         segmentation, Grad-CAM heatmap, SHAP chart and generated report.</div>""", unsafe_allow_html=True)
