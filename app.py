@@ -518,7 +518,8 @@ divider()
 section("demo", "", "Demonstration",
         "A Streamlit app runs the full pipeline on a laptop CPU: upload a photo, add optional details, and get the "
         "segmentation, result, heatmap, SHAP chart and report.")
-videos = list(DEMO_VIDEOS) + [{"title": p.stem.replace("_", " ").title(), "file": p}
+VIDEO_TITLES = {"AIE25002_demo": "Screening app walkthrough"}
+videos = list(DEMO_VIDEOS) + [{"title": VIDEO_TITLES.get(p.stem, p.stem.replace("_", " ")), "file": p}
                               for p in sorted((ASSETS / "videos").glob("*.mp4"))]
 for v in videos:
     st.markdown(f"<h3 class='h3'>{v['title']}</h3>", unsafe_allow_html=True)
